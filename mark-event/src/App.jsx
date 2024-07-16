@@ -53,6 +53,13 @@ function App() {
     closeModal();
   };
 
+  const [open2, setOpen2] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const handleEventClick = (e) => {
+    setSelectedEvent(e);
+    setOpen2(true);
+  };
+
   return (
     <div
       style={{
@@ -71,6 +78,7 @@ function App() {
           selectable
           events={slots}
           onSelectSlot={handleClick}
+          onSelectEvent={handleEventClick}
         />
       </div>
       <Modal
@@ -102,6 +110,27 @@ function App() {
         </form>
 
         <button onClick={closeModal}>Close Modal</button>
+      </Modal>
+
+      <Modal isOpen={open2} style={customStyles} contentLabel="Example Modal">
+        <h3>Your Slot Details</h3>
+        {selectedEvent != null ? (
+          <div>
+            <h3>Title : {selectedEvent.title}</h3>
+            <p>Desc: {selectedEvent.desc}</p>
+            <p>
+              Start Time: {selectedEvent.start.getDate()}/
+              {selectedEvent.start.getMonth() + 1}/
+              {selectedEvent.start.getFullYear()}
+            </p>
+            <p>
+              End Time: {selectedEvent.end.getDate()}/
+              {selectedEvent.end.getMonth() + 1}/
+              {selectedEvent.end.getFullYear()}
+            </p>
+          </div>
+        ) : null}
+        <button onClick={() => setOpen2(false)}>Close Modal</button>
       </Modal>
     </div>
   );
